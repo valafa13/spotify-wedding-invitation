@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   // =========================================================
-  // ==== FUNGSI UNTUK NAVIGASI SINGLE-PAGE (SPA) ====
+  // ==== FUNGSI UNTUK NAVIGASI SINGLE-PAGE (SPA) === =
   // =========================================================
   const navLinks = document.querySelectorAll(".nav-link");
   const sections = document.querySelectorAll("main section");
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // =========================================================
-  // ==== FUNGSI-FUNGSI LAINNYA ====
+  // ==== FUNGSI-FUNGSI LAINNYA === =
   // =========================================================
 
   // --- FUNGSI TAB ACARA ---
@@ -83,7 +83,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // --- FUNGSI RSVP FORM ---
   const rsvpForm = document.getElementById("rsvp-form");
+
+  // Get URL parameters once at the start and use throughout the code
+  const urlParams = new URLSearchParams(window.location.search);
+  const guestName = urlParams.get("to") || "Guest";
+
+  // Format name function to ensure consistency
+  const formatName = (name) => {
+    return name
+      .split("+")
+      .map(
+        (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      )
+      .join(" ");
+  };
+
   if (rsvpForm) {
+    const nameInput = document.getElementById("nama");
+    if (nameInput) {
+      // Use the name from URL parameter
+      const formattedName = formatName(guestName);
+      nameInput.value = formattedName;
+      nameInput.setAttribute("readonly", true);
+      nameInput.style.backgroundColor = "#f0f0f0";
+
+      // Also update the formData to include the correct name
+      const formData = new FormData(rsvpForm);
+      formData.set("entry.12345678", formattedName);
+    }
+
     const successNotification = document.getElementById("success-notification");
     rsvpForm.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -234,30 +262,19 @@ document.addEventListener("DOMContentLoaded", function () {
   // Gallery modal functionality
   const modal = document.getElementById("image-modal");
   const modalImg = document.getElementById("modal-img");
-  const closeBtn = document.getElementsByClassName("close-modal")[0];
   const galleryImages = document.querySelectorAll(".gallery-img");
 
   galleryImages.forEach((img) => {
-    img.addEventListener("click", function () {
-      modal.style.display = "block";
-      modalImg.src = this.src;
-    });
+      img.addEventListener("click", function() {
+          modal.style.display = "flex";
+          modalImg.src = this.src;
+      });
   });
 
-  closeBtn.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
-
-  modal.addEventListener("click", function (e) {
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-
-  // Close on escape key
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      closeModal();
-    }
+  // Close modal when clicking outside the image
+  modal.addEventListener("click", function(e) {
+      if (e.target === modal) {
+          modal.style.display = "none";
+      }
   });
 });

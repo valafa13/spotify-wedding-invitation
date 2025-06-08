@@ -12,25 +12,32 @@
             font-family: 'Poppins', sans-serif;
             background: #121212;
             color: white;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            overflow: hidden;
         }
         .welcome-container {
             padding: 20px;
             max-width: 600px;
+            width: 90%;
         }
         .welcome-text {
-            font-size: 2em;
-            margin-bottom: 10px;
+            font-size: 1.5em;
+            margin-bottom: 5px;
             color: #1DB954;
         }
         .guest-name {
-            font-size: 2.5em;
-            margin: 20px 0;
+            font-size: 2em;
+            margin: 15px 0;
             font-weight: 700;
+        }
+        .invitation-text {
+            font-size: 1rem;
+            line-height: 1.4;
+            margin: 10px 0;
         }
         .open-btn {
             background: #1DB954;
@@ -49,11 +56,33 @@
             transform: scale(1.05);
         }
         .cover-image {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            margin-bottom: 30px;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
             object-fit: cover;
+        }
+        
+        /* Add media queries for better responsiveness */
+        @media (max-height: 700px) {
+            .cover-image {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 15px;
+            }
+            .welcome-text {
+                font-size: 1.2em;
+            }
+            .guest-name {
+                font-size: 1.6em;
+                margin: 10px 0;
+            }
+            .invitation-text {
+                font-size: 0.9rem;
+            }
+            .open-btn {
+                margin-top: 20px;
+                padding: 12px 25px;
+            }
         }
     </style>
 </head>
@@ -62,8 +91,8 @@
         <img src="assets/poster-wedding.jpg" alt="Wedding Cover" class="cover-image">
         <div class="welcome-text">Dear,</div>
         <div class="guest-name" id="guestName"></div>
-        <div>You are cordially invited to our wedding celebration</div>
-        <a href="main.html?autoplay=true" class="open-btn">Open Invitation</a>
+        <div class="invitation-text">You are cordially invited to our wedding celebration</div>
+        <a href="main.html" class="open-btn">Open Invitation</a>
     </div>
 
     <script>
@@ -72,13 +101,18 @@
             const urlParams = new URLSearchParams(window.location.search);
             const name = urlParams.get('to') || 'Guest';
             
-            // Convert URL-friendly format to display format
+            // Update the Open Invitation link
+            const openBtn = document.querySelector('.open-btn');
+            if (openBtn) {
+                openBtn.href = `main.html?to=${encodeURIComponent(name)}&autoplay=true`;
+            }
+            
+            // Format and display the name
             const formattedName = name
                 .split('+')
                 .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
                 .join(' ');
             
-            // Display the name
             document.getElementById('guestName').textContent = formattedName;
         });
     </script>
