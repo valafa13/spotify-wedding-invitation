@@ -158,9 +158,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // --- FUNGSI AUDIO PLAYER ---
   const episodePlayBtn = document.getElementById("episode-play-btn");
   const weddingSong = document.getElementById("wedding-song");
+
   if (episodePlayBtn && weddingSong) {
     const episodePlayIcon = document.getElementById("episode-play-icon");
     const previewBtn = document.querySelector(".preview-button");
+
     const togglePlay = () => {
       if (weddingSong.paused) {
         weddingSong.play();
@@ -170,39 +172,92 @@ document.addEventListener("DOMContentLoaded", function () {
         episodePlayIcon.classList.replace("fa-pause", "fa-play");
       }
     };
+
+    // Check for autoplay parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("autoplay") === "true") {
+      // Create a user interaction promise
+      const userInteractionPromise = new Promise((resolve) => {
+        document.addEventListener("click", resolve, { once: true });
+        document.addEventListener("touchstart", resolve, { once: true });
+      });
+
+      // Try to autoplay after user interaction
+      userInteractionPromise
+        .then(() => {
+          weddingSong.play()
+            .then(() => {
+              episodePlayIcon.classList.replace("fa-play", "fa-pause");
+            })
+            .catch((error) => {
+              console.log("Autoplay failed:", error);
+            });
+        });
+    }
+
     episodePlayBtn.addEventListener("click", togglePlay);
     if (previewBtn) previewBtn.addEventListener("click", togglePlay);
   }
 
-   const giftList = document.getElementById("gift-list");
+  const giftList = document.getElementById("gift-list");
 
-   // Cek jika elemen #gift-list ada di halaman saat ini
-   if (giftList) {
-     giftList.addEventListener("click", function (e) {
-       // Hanya jalankan jika yang diklik adalah tombol dengan kelas .copy-gift-button
-       if (e.target && e.target.classList.contains("copy-gift-button")) {
-         const button = e.target;
-         const targetId = button.dataset.copyTarget;
-         const textToCopy = document.getElementById(targetId).innerText;
+  // Cek jika elemen #gift-list ada di halaman saat ini
+  if (giftList) {
+    giftList.addEventListener("click", function (e) {
+      // Hanya jalankan jika yang diklik adalah tombol dengan kelas .copy-gift-button
+      if (e.target && e.target.classList.contains("copy-gift-button")) {
+        const button = e.target;
+        const targetId = button.dataset.copyTarget;
+        const textToCopy = document.getElementById(targetId).innerText;
 
-         navigator.clipboard
-           .writeText(textToCopy)
-           .then(() => {
-             // Beri feedback visual setelah berhasil menyalin
-             const originalText = button.innerText;
-             button.innerText = "Tersalin!";
-             button.style.backgroundColor = "#4CAF50"; // Ubah warna jadi hijau tua
+        navigator.clipboard
+          .writeText(textToCopy)
+          .then(() => {
+            // Beri feedback visual setelah berhasil menyalin
+            const originalText = button.innerText;
+            button.innerText = "Tersalin!";
+            button.style.backgroundColor = "#4CAF50"; // Ubah warna jadi hijau tua
 
-             setTimeout(() => {
-               button.innerText = originalText;
-               button.style.backgroundColor = "var(--spotify-green)"; // Kembalikan warna
-             }, 2000); // Kembalikan teks dan warna setelah 2 detik
-           })
-           .catch((err) => {
-             console.error("Gagal menyalin: ", err);
-             alert("Gagal menyalin nomor.");
-           });
-       }
-     });
-   }
+            setTimeout(() => {
+              button.innerText = originalText;
+              button.style.backgroundColor = "var(--spotify-green)"; // Kembalikan warna
+            }, 2000); // Kembalikan teks dan warna setelah 2 detik
+          })
+          .catch((err) => {
+            console.error("Gagal menyalin: ", err);
+            alert("Gagal menyalin nomor.");
+          });
+      }
+    });
+  }
+
+  // Gallery modal functionality
+  const modal = document.getElementById("image-modal");
+  const modalImg = document.getElementById("modal-img");
+  const closeBtn = document.getElementsByClassName("close-modal")[0];
+  const galleryImages = document.querySelectorAll(".gallery-img");
+
+  galleryImages.forEach((img) => {
+    img.addEventListener("click", function () {
+      modal.style.display = "block";
+      modalImg.src = this.src;
+    });
+  });
+
+  closeBtn.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+
+  modal.addEventListener("click", function (e) {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+
+  // Close on escape key
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      closeModal();
+    }
+  });
 });

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You're Invited! | Fathya & Nauval</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="spotify-container">
+        <header class="spotify-header">
+            <nav class="nav-pills">
+                <a href="#beranda" class="nav-link active">Beranda</a>
+                <a href="#acara" class="nav-link">Acara</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
+                <a href="#rsvp" class="nav-link">RSVP</a>
+            </nav>
+        </header>
+
+        <main>
+            <section id="beranda">
+                 <div class="event-info">
+                     <img src="assets/poster-wedding.jpg" alt="Foto Fathya & Nauval" class="main-photo">
+                     <h1>Fathya & Nauval</h1>
+                     <p>Are getting married!</p>
+                 </div>
+            </section>
+
+             <section id="episode-feature">
+                <div class="episode-card">
+                    <div class="episode-header">
+                        <div class="episode-title-group">
+                            <h2>Finally SAH!</h2>
+                            <p>Episode • A Wedding Story</p>
+                        </div>
+                        <button class="add-button"><i class="fas fa-plus"></i></button>
+                    </div>
+
+                    <div class="episode-body">
+                        <div class="waveform-bg"></div>
+                        <img src="assets/poster-wedding.jpg" alt="Episode Cover" class="episode-cover">
+                    </div>
+
+                    <div class="episode-meta">
+                        <p>Apr 18 • Life Podcast</p>
+                    </div>
+
+                    <div class="episode-description">
+                        <p>Fathya dan Nauval mengundang Anda untuk menjadi bagian dari kisah cinta mereka, dalam sebuah perayaan pernikahan yang hangat dan penuh makna. Sebuah momen spesial yang akan dikenang seumur hidup—dengan orang-orang terdekat, dalam suasana yang intim dan penuh cinta.</p>
+                    </div>
+
+                    <div class="episode-controls">
+                        <button class="preview-button">
+                            <i class="fas fa-volume-up"></i>
+                            <span>Play Story Audio</span>
+                        </button>
+                        <div class="actions-right">
+                            <button id="episode-play-btn" class="main-play-button">
+                                <i id="episode-play-icon" class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <audio id="wedding-song" src="assets/song-bg.mpeg" loop></audio>
+
+            <section id="the-couple" class="playlist">
+                <h2 class="section-title">The Couple</h2>
+
+                <div class="playlist-item with-photo">
+                    <div class="track-lead">
+                        <img src="assets/cw.jpg" alt="Foto Fathya" class="playlist-photo">
+                    </div>
+                    <div class="track-info">
+                        <p class="track-title">Al Fathya Khaerunnisa</p>
+                        <p class="track-artist">Putri pertama dari Bapak Haerudin & Ibu Yuniati</p>
+                    </div>
+                </div>
+
+                <div class="playlist-item with-photo">
+                    <div class="track-lead">
+                        <img src="assets/cp.jpg" alt="Foto Nauval" class="playlist-photo">
+                    </div>
+                    <div class="track-info">
+                        <p class="track-title">Nauval Firmansyah</p>
+                        <p class="track-artist">Putra kedua dari Bapak Heriyansyah Fitri & Ibu Ilah Arillah</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="acara">
+                <h2 class="section-title">Detail Acara</h2>
+
+                <div class="event-tabs">
+                    <button class="tab-button" data-target="#akad-details">Akad Nikah</button>
+                    <button class="tab-button active" data-target="#party-details">Intimate Party</button>
+                </div>
+
+                <div class="event-content-wrapper">
+                    <div id="akad-details" class="event-tab-content">
+                        <div class="detail-item">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>Senin, 13 April 2026</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="far fa-clock"></i>
+                            <span>12:00 WIB - Selesai</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Kantor Urusan Agama, Bogor</span>
+                        </div>
+                    </div>
+
+                    <div id="party-details" class="event-tab-content active">
+                        <div class="detail-item">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>Sabtu, 18 April 2026</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="far fa-clock"></i>
+                            <span>09:00 WIB - Selesai</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>The Grand Ballroom, Jakarta</span>
+                        </div>
+                        <div class="event-buttons">
+                            <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=Intimate+party+N%2FA&location=Kampung+kecil+vivo+mall+sentul&dates=20260418T020000Z%2F20260418T050000Z" target="_blank" class="cta-button small calendar">
+                                <i class="fas fa-calendar-plus"></i> Add to Calendar
+                            </a>
+                            <a href="https://maps.app.goo.gl/oRMwAqPMsM2ZxLii6" target="_blank" class="cta-button small">
+                                <i class="fas fa-map-marker-alt"></i> Lihat Lokasi
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="gallery" class="gallery">
+                <h2 class="section-title">Gallery</h2>
+                <div class="gallery-grid">
+                    <img src="assets/pw-1.JPG" alt="Foto Prewedding 1" class="gallery-img">
+                    <img src="assets/pw-2.jpg" alt="Foto Prewedding 2" class="gallery-img">
+                    <img src="assets/pw-3.jpg" alt="Foto Prewedding 3" class="gallery-img">
+                    <img src="assets/pw-4.jpg" alt="Foto Prewedding 4" class="gallery-img">
+                </div>
+                <div id="image-modal" class="modal">
+                    <span class="close-modal">&times;</span>
+                    <img class="modal-content" id="modal-img">
+                </div>
+            </section>
+
+            <section id="rsvp" class="rsvp-section">
+                <h2 class="section-title">RSVP Confirmation</h2>
+                <form id="rsvp-form">
+                    <input type="text" id="nama" name="entry.12345678" placeholder="Nama Anda" required>
+                    <p>Apakah Anda akan hadir?</p>
+                    <div class="radio-group">
+                        <input type="radio" id="hadir-ya" name="entry.87654321" value="Ya, saya akan hadir" required>
+                        <label for="hadir-ya">Ya, saya akan hadir</label>
+                    </div>
+                     <div class="radio-group">
+                        <input type="radio" id="hadir-tidak" name="entry.87654321" value="Maaf, tidak bisa hadir">
+                        <label for="hadir-tidak">Maaf, tidak bisa hadir</label>
+                    </div>
+                    <textarea id="catatan" name="entry.55555555" placeholder="Ucapan atau catatan (opsional)"></textarea>
+                    <button type="submit" class="cta-button">Kirim Konfirmasi</button>
+                </form>
+                <div id="success-notification" class="notification">
+                    <i class="fas fa-check-circle"></i> Terima kasih, konfirmasi Anda telah terkirim!
+                </div>
+            </section>
+
+            <section id="wedding-gift" class="playlist">
+                <h2 class="section-title">Wedding Gift</h2>
+                <p class="gift-description">
+                    Doa restu Anda adalah hadiah terindah bagi kami. Namun jika Anda ingin memberikan tanda kasih, kami menyediakan fasilitas di bawah ini untuk kemudahan Anda.
+                </p>
+
+                <div id="gift-list">
+                    <div class="playlist-item">
+                        <span class="track-number"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Bank_Central_Asia.svg" class="bank-icon" alt="BCA"></span>
+                        <div class="track-info">
+                            <p class="track-title">BCA - Al Fathya K.</p>
+                            <p class="track-artist" id="rekening-fathya">1234567890</p>
+                        </div>
+                        <button class="copy-gift-button" data-copy-target="rekening-fathya">Salin</button>
+                    </div>
+
+                    <div class="playlist-item">
+                        <span class="track-number"><img src="https://upload.wikimedia.org/wikipedia/id/thumb/5/55/BNI_logo.svg/2560px-BNI_logo.svg.png" class="bank-icon" alt="Mandiri"></span>
+                        <div class="track-info">
+                            <p class="track-title">Mandiri - Nauval F.</p>
+                            <p class="track-artist" id="rekening-nauval">0987654321</p>
+                        </div>
+                        <button class="copy-gift-button" data-copy-target="rekening-nauval">Salin</button>
+                    </div>
+                    
+                    </div>
+            </section>
+        </main>
+
+        <footer class="now-playing-bar" id="footer-trigger">
+            <div class="progress-bar"></div>
+
+            <div class="album-art-gift">
+                <i class="far fa-calendar-alt"></i>
+            </div>
+            
+            <div class="countdown-container">
+                <div class="time-block">
+                    <span id="days">00</span><p>Hari</p>
+                </div>
+                <div class="time-block">
+                    <span id="hours">00</span><p>Jam</p>
+                </div>
+                <div class="time-block">
+                    <span id="minutes">00</span><p>Menit</p>
+                </div>
+                <div class="time-block">
+                    <span id="seconds">00</span><p>Detik</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
