@@ -92,22 +92,17 @@ document.addEventListener("DOMContentLoaded", function () {
   const formatName = (name) => {
     return name
       .split("+")
-      .map(
-        (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-      )
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(" ");
   };
 
   if (rsvpForm) {
     const nameInput = document.getElementById("nama");
     if (nameInput) {
-      // Use the name from URL parameter
       const formattedName = formatName(guestName);
       nameInput.value = formattedName;
       nameInput.setAttribute("readonly", true);
-      nameInput.style.backgroundColor = "#f0f0f0";
 
-      // Also update the formData to include the correct name
       const formData = new FormData(rsvpForm);
       formData.set("entry.12345678", formattedName);
     }
@@ -211,16 +206,16 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       // Try to autoplay after user interaction
-      userInteractionPromise
-        .then(() => {
-          weddingSong.play()
-            .then(() => {
-              episodePlayIcon.classList.replace("fa-play", "fa-pause");
-            })
-            .catch((error) => {
-              console.log("Autoplay failed:", error);
-            });
-        });
+      userInteractionPromise.then(() => {
+        weddingSong
+          .play()
+          .then(() => {
+            episodePlayIcon.classList.replace("fa-play", "fa-pause");
+          })
+          .catch((error) => {
+            console.log("Autoplay failed:", error);
+          });
+      });
     }
 
     episodePlayBtn.addEventListener("click", togglePlay);
@@ -258,23 +253,91 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-
-  // Gallery modal functionality
+  // =========================================================
+  // ==== FUNGSI BARU UNTUK GALERI INTERAKTIF (SWIPE & NAV) ====
+  // =========================================================
   const modal = document.getElementById("image-modal");
-  const modalImg = document.getElementById("modal-img");
-  const galleryImages = document.querySelectorAll(".gallery-img");
 
-  galleryImages.forEach((img) => {
-      img.addEventListener("click", function() {
-          modal.style.display = "flex";
-          modalImg.src = this.src;
-      });
-  });
+  if (modal) {
+    const modalImg = document.getElementById("modal-img");
+    const galleryImages = document.querySelectorAll(".gallery-img");
+    const imagesArray = Array.from(galleryImages); // Ubah NodeList ke Array
+    const closeModalBtn = document.querySelector(".close-modal-btn");
+    const prevBtn = document.querySelector(".prev-btn");
+    const nextBtn = document.querySelector(".next-btn");
 
-  // Close modal when clicking outside the image
-  modal.addEventListener("click", function(e) {
-      if (e.target === modal) {
-          modal.style.display = "none";
+    let currentIndex = 0;
+
+    // --- Fungsi untuk menampilkan gambar berdasarkan index ---
+    function showImage(index) {
+      if (index >= imagesArray.length) {
+        currentIndex = 0;
+      } else if (index < 0) {
+        currentIndex = imagesArray.length - 1;
+      } else {
+        currentIndex = index;
       }
-  });
+      modalImg.src = imagesArray[currentIndex].src;
+    }
+
+    // --- Event listener untuk setiap gambar di galeri ---
+    imagesArray.forEach((img, index) => {
+      img.addEventListener("click", function () {
+        modal.style.display = "flex";
+        showImage(index);
+      });
+    });
+
+    // --- Fungsi Navigasi ---
+    const showNextImage = () => showImage(currentIndex + 1);
+    const showPrevImage = () => showImage(currentIndex - 1);
+    const closeModal = () => (modal.style.display = "none");
+
+    // --- Event Listener untuk Tombol ---
+    nextBtn.addEventListener("click", showNextImage);
+    prevBtn.addEventListener("click", showPrevImage);
+    closeModalBtn.addEventListener("click", closeModal);
+
+    // --- Navigasi dengan Keyboard (Arrow Keys & Escape) ---
+    document.addEventListener("keydown", function (e) {
+      if (modal.style.display === "flex") {
+        if (e.key === "ArrowRight") {
+          showNextImage();
+        } else if (e.key === "ArrowLeft") {
+          showPrevImage();
+        } else if (e.key === "Escape") {
+          closeModal();
+        }
+      }
+    });
+
+    // --- Logika untuk SWIPE di Layar Sentuh ---
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    modal.addEventListener(
+      "touchstart",
+      function (event) {
+        touchStartX = event.changedTouches[0].screenX;
+      },
+      { passive: true }
+    );
+
+    modal.addEventListener("touchend", function (event) {
+      touchEndX = event.changedTouches[0].screenX;
+      handleSwipe();
+    });
+
+    function handleSwipe() {
+      // Swipe ke kiri (untuk gambar selanjutnya)
+      if (touchEndX < touchStartX - 50) {
+        // 50px adalah ambang batas swipe
+        showNextImage();
+      }
+      // Swipe ke kanan (untuk gambar sebelumnya)
+      if (touchEndX > touchStartX + 50) {
+        showPrevImage();
+      }
+    }
+  }
 });
