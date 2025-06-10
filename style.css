@@ -323,8 +323,9 @@ main {
 .event-buttons {
     margin-top: 25px;
     display: flex;
+    flex-direction: column;
     gap: 10px;
-    justify-content: center;
+    align-items: center;
 }
 
 .cta-button.small.calendar {
