@@ -4,95 +4,402 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome | Fathya & Nauval's Wedding</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
-            background: #121212;
+            background: #000000;
             color: white;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            overflow: hidden;
-        }
-        .welcome-container {
-            padding: 20px;
-            max-width: 600px;
-            width: 90%;
-        }
-        .welcome-text {
-            font-size: 1.5em;
-            margin-bottom: 5px;
-            color: #1DB954;
-        }
-        .guest-name {
-            font-size: 2em;
-            margin: 15px 0;
-            font-weight: 700;
-        }
-        .invitation-text {
-            font-size: 1rem;
-            line-height: 1.4;
-            margin: 10px 0;
-        }
-        .open-btn {
-            background: #1DB954;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 30px;
-        }
-        .open-btn:hover {
-            transform: scale(1.05);
-        }
-        .cover-image {
-            width: 150px;
-            height: 150px;
-            margin-bottom: 20px;
-            object-fit: cover;
+            overflow-x: hidden;
+            position: relative;
         }
         
-        /* Add media queries for better responsiveness */
-        @media (max-height: 700px) {
-            .cover-image {
-                width: 120px;
-                height: 120px;
-                margin-bottom: 15px;
+        /* Mobile phone container */
+        .phone-frame {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+        }
+        
+        /* Animated background gradient */
+        .phone-frame::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(29, 185, 84, 0.15) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(29, 185, 84, 0.3);
+            pointer-events: none;
+            animation: float 15s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+        
+        .welcome-container {
+            padding: 40px 20px;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            .welcome-text {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Spotify logo area */
+        .spotify-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        .spotify-icon {
+            width: 40px;
+            height: 40px;
+            fill: #1DB954;
+        }
+        
+        .spotify-text {
+            font-size: 1.5em;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Album cover styling */
+        .album-wrapper {
+            perspective: 1000px;
+            margin-bottom: 30px;
+            animation: scaleIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s both;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .album-container {
+            position: relative;
+            display: inline-block;
+            filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+        }
+        
+        .cover-image {
+            width: 280px;
+            height: 280px;
+            border-radius: 8px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .album-container:hover .cover-image {
+            transform: scale(1.03);
+        }
+        
+        /* Vinyl record effect */
+        .vinyl-effect {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border-radius: 8px;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, rgba(29, 185, 84, 0.1) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        /* Wedding Playlist Header */
+        .playlist-header {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 40px;
+            letter-spacing: -1px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        .welcome-text {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            color: #B3B3B3;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+        
+        .guest-name {
+            font-size: 2.5em;
+            margin: 15px 0 10px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1DB954 0%, #1ed760 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeIn 1s ease-out 0.7s both;
+            line-height: 1.2;
+        }
+        
+        .invitation-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin: 20px auto;
+            color: #E0E0E0;
+            font-weight: 300;
+            max-width: 400px;
+            animation: fadeIn 1s ease-out 0.9s both;
+        }
+        
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #1DB954, transparent);
+            margin: 25px auto;
+            border-radius: 2px;
+            animation: expandWidth 1s ease-out 1.1s both;
+        }
+        
+        @keyframes expandWidth {
+            from { width: 0; }
+            to { width: 60px; }
+        }
+        
+        /* Play button style */
+        .open-btn {
+            background: #1DB954;
+            color: #000;
+            border: none;
+            padding: 16px 50px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 30px;
+            box-shadow: 0 8px 24px rgba(29, 185, 84, 0.4);
+            animation: fadeIn 1s ease-out 1.3s both;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .open-btn:hover {
+            transform: scale(1.05);
+            background: #1ed760;
+            box-shadow: 0 12px 32px rgba(29, 185, 84, 0.6);
+        }
+        
+        .open-btn:active {
+            transform: scale(0.98);
+        }
+        
+        /* Play icon */
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-left: 12px solid #000;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+            margin-left: 2px;
+        }
+        
+        /* Info badge */
+        .badge {
+            display: inline-block;
+            background: rgba(29, 185, 84, 0.15);
+            border: 1px solid rgba(29, 185, 84, 0.3);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #1DB954;
+            margin-top: 20px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            animation: fadeIn 1s ease-out 1.5s both;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .cover-image {
+                width: 240px;
+                height: 240px;
+            }
+            
+            .vinyl-effect {
+                width: 240px;
+                height: 240px;
+            }
+            
+            .guest-name {
+                font-size: 2em;
+            }
+            
+            .spotify-text {
                 font-size: 1.2em;
             }
+            
+            .invitation-text {
+                font-size: 0.95rem;
+            }
+        }
+        
+        @media (max-height: 700px) {
+            .welcome-container {
+                padding: 20px;
+            }
+            
+            .cover-image {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .vinyl-effect {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .spotify-logo {
+                margin-bottom: 20px;
+            }
+            
+            .welcome-text {
+                font-size: 0.8em;
+                margin-bottom: 5px;
+            }
+            
             .guest-name {
-                font-size: 1.6em;
+                font-size: 1.8em;
                 margin: 10px 0;
             }
+            
             .invitation-text {
                 font-size: 0.9rem;
+                margin: 15px auto;
             }
+            
             .open-btn {
                 margin-top: 20px;
-                padding: 12px 25px;
+                padding: 14px 40px;
+                font-size: 0.9rem;
+            }
+            
+            .badge {
+                margin-top: 15px;
+                font-size: 0.7rem;
+                padding: 6px 16px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="welcome-container">
-        <img src="assets/poster-wedding.jpg" alt="Wedding Cover" class="cover-image">
+    <div class="phone-frame">
+        <!-- Floating particles -->
+        <div class="particle" style="left: 10%; width: 4px; height: 4px; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; width: 6px; height: 6px; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 30%; width: 3px; height: 3px; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 40%; width: 5px; height: 5px; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 50%; width: 4px; height: 4px; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 60%; width: 6px; height: 6px; animation-delay: 5s;"></div>
+        <div class="particle" style="left: 70%; width: 3px; height: 3px; animation-delay: 2.5s;"></div>
+        <div class="particle" style="left: 80%; width: 5px; height: 5px; animation-delay: 4.5s;"></div>
+        <div class="particle" style="left: 90%; width: 4px; height: 4px; animation-delay: 1.5s;"></div>
+        
+        <div class="welcome-container">
+        <!-- Header -->
+        <div class="playlist-header">Wedding Playlist</div>
+        
+        <!-- Album Cover -->
+        <div class="album-wrapper">
+            <div class="album-container">
+                <img src="assets/poster-wedding.jpg" alt="Wedding Cover" class="cover-image">
+                <div class="vinyl-effect"></div>
+            </div>
+        </div>
+        
+        <!-- Guest Info -->
         <div class="welcome-text">Dear,</div>
         <div class="guest-name" id="guestName"></div>
-        <div class="invitation-text">You are cordially invited to our wedding celebration</div>
-        <a href="main.html" class="open-btn">Open Invitation</a>
+        
+        <div class="divider"></div>
+        
+        <div class="invitation-text">
+            You are cordially invited to celebrate<br>
+            our special day of love and joy
+        </div>
+        
+        <!-- Open Button with Play Icon -->
+        <a href="main.html" class="open-btn">
+            <div class="play-icon"></div>
+            <span>Open Invitation</span>
+        </a>
+    </div>
     </div>
 
     <script>
