@@ -260,7 +260,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (modal) {
     const modalImg = document.getElementById("modal-img");
-    const galleryImages = document.querySelectorAll(".gallery-img");
+    const galleryImages = document.querySelectorAll(".gallery-img img");
     const imagesArray = Array.from(galleryImages); // Ubah NodeList ke Array
     const closeModalBtn = document.querySelector(".close-modal-btn");
     const prevBtn = document.querySelector(".prev-btn");
@@ -339,5 +339,63 @@ document.addEventListener("DOMContentLoaded", function () {
         showPrevImage();
       }
     }
+  }
+});
+
+// =========================================================
+// ==== FUNGSI UNTUK COUPLE MODAL DETAIL ====
+// =========================================================
+
+const coupleData = {
+  bride: {
+    name: "Al Fathya Khaerunnisa",
+    role: "The Bride",
+    image: "assets/cw.jpg",
+    about: "A beautiful soul with a heart full of love and kindness. Fathya brings joy and warmth to everyone around her.",
+    parents: "Putri pertama dari Bapak Haerudin & Ibu Yuniati"
+  },
+  groom: {
+    name: "Nauval Firmansyah",
+    role: "The Groom",
+    image: "assets/cp.jpg",
+    about: "A caring and loving person who always puts his family first. Nauval is known for his dedication and warm personality.",
+    parents: "Putra kedua dari Bapak Heriyansyah Fitri & Ibu Ilah Arillah"
+  }
+};
+
+const coupleModal = document.getElementById("couple-modal");
+const coupleClickables = document.querySelectorAll(".couple-clickable");
+const coupleModalClose = document.querySelector(".couple-modal-close");
+
+// Open modal when clicking couple item
+coupleClickables.forEach(item => {
+  item.addEventListener("click", function() {
+    const coupleType = this.getAttribute("data-couple");
+    const data = coupleData[coupleType];
+    
+    // Set modal content
+    document.getElementById("couple-hero-img").src = data.image;
+    document.getElementById("couple-hero-name").textContent = data.name;
+    document.getElementById("couple-hero-role").textContent = data.role;
+    document.getElementById("couple-detail-about").textContent = data.about;
+    document.getElementById("couple-detail-parents").textContent = data.parents;
+    
+    // Show modal
+    coupleModal.classList.add("show");
+    document.body.style.overflow = "hidden";
+  });
+});
+
+// Close modal
+coupleModalClose.addEventListener("click", function() {
+  coupleModal.classList.remove("show");
+  document.body.style.overflow = "";
+});
+
+// Close modal when clicking outside
+coupleModal.addEventListener("click", function(e) {
+  if (e.target === coupleModal) {
+    coupleModal.classList.remove("show");
+    document.body.style.overflow = "";
   }
 });

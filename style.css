@@ -21,20 +21,23 @@ html {
 
 body {
     font-family: var(--font-family);
-    background-color: #000;
+    background-color: #000000;
     color: var(--spotify-white);
     display: flex;
     justify-content: center;
+    margin: 0;
+    padding: 0;
 }
 
 .spotify-container {
     width: 100%;
-    max-width: 450px;
+    max-width: 430px;
     background-color: var(--spotify-black);
     min-height: 100vh;
     position: relative;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
 }
 
 /* Header dengan Nav Pills */
@@ -367,22 +370,32 @@ main {
 /* couple desc */
 .playlist-item.with-photo {
     display: flex;
-    align-items: flex-start; 
+    align-items: center; 
     gap: 15px;
-    padding: 10px 0;
+    padding: 12px 10px;
+}
+
+.couple-clickable {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin: 0 -10px;
+    border-radius: 6px;
+}
+
+.couple-clickable:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 .track-lead {
     display: flex;
     align-items: center;
-    gap: 15px;
 }
 
 .playlist-photo {
-    width: 50px;
-    height: 50px;
+    width: 56px;
+    height: 56px;
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: 6px;
     flex-shrink: 0;
 }
 
@@ -392,7 +405,8 @@ main {
 }
 
 .playlist-item.with-photo .track-title {
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 1rem;
     color: var(--spotify-white);
     margin: 0;
 }
@@ -401,36 +415,273 @@ main {
     font-size: 0.75rem;
     color: var(--spotify-light-gray);
     margin: 0;
+    margin-top: 4px;
     line-height: 1.5;
+}
+
+.track-action {
+    display: flex;
+    align-items: center;
+    color: var(--spotify-light-gray);
+    font-size: 1.2rem;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.couple-clickable:hover .track-action {
+    opacity: 1;
+}
+
+/* Couple Modal */
+.couple-modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    overflow-y: auto;
+}
+
+.couple-modal.show {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+.couple-modal-content {
+    width: 100%;
+    max-width: 430px;
+    margin: 0 auto;
+    background-color: var(--spotify-black);
+    min-height: 100vh;
+    position: relative;
+}
+
+.couple-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.couple-modal-close:hover {
+    background: rgba(0, 0, 0, 0.9);
+}
+
+/* Hero Section */
+.couple-hero {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    min-height: 400px;
+    overflow: hidden;
+}
+
+.couple-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.couple-hero-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, var(--spotify-black) 0%, transparent 100%);
+    padding: 40px 20px 30px;
+}
+
+.couple-hero-info {
+    max-width: 430px;
+    margin: 0 auto;
+}
+
+.verified-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #3D91F5;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.verified-badge i {
+    font-size: 1.2rem;
+}
+
+.couple-hero-name {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--spotify-white);
+    margin: 0 0 10px 0;
+    line-height: 1;
+    letter-spacing: -1px;
+}
+
+.couple-hero-role {
+    font-size: 1rem;
+    color: var(--spotify-white);
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Detail Section */
+.couple-details {
+    padding: 30px 20px;
+    max-width: 430px;
+    margin: 0 auto;
+}
+
+.couple-detail-section {
+    margin-bottom: 30px;
+}
+
+.couple-detail-section h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--spotify-white);
+    margin: 0 0 15px 0;
+}
+
+.couple-detail-section p {
+    font-size: 0.95rem;
+    color: var(--spotify-light-gray);
+    line-height: 1.6;
+    margin: 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 
 /* Galeri */
+.gallery {
+    padding-bottom: 30px;
+}
+
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 80px;
+    gap: 8px;
+    margin-bottom: 20px;
 }
 
 .gallery-img {
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background: var(--spotify-dark-gray);
 }
 
-.gallery-img:hover {
+.gallery-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+/* Overlay sederhana */
+.gallery-img::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.gallery-img:hover::before {
+    opacity: 1;
+}
+
+.gallery-img:hover img {
     transform: scale(1.05);
 }
 
-.gallery-grid img {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    border-radius: 4px;
-    transition: transform 0.2s ease;
+.gallery-img:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-.gallery-grid img:hover {
-    transform: scale(1.03);
+/* Variasi ukuran grid untuk layout yang menarik */
+/* Layout optimized for 6 photos */
+.gallery-img:nth-child(1) {
+    grid-column: span 6;
+    grid-row: span 3;
+}
+
+.gallery-img:nth-child(2) {
+    grid-column: span 3;
+    grid-row: span 3;
+}
+
+.gallery-img:nth-child(3) {
+    grid-column: span 3;
+    grid-row: span 3;
+}
+
+.gallery-img:nth-child(4) {
+    grid-column: span 2;
+    grid-row: span 3;
+}
+
+.gallery-img:nth-child(5) {
+    grid-column: span 4;
+    grid-row: span 3;
+}
+
+.gallery-img:nth-child(6) {
+    grid-column: span 6;
+    grid-row: span 3;
+}
+
+/* Animasi masuk untuk setiap foto */
+.gallery-img {
+    animation: fadeInScale 0.6s ease-out backwards;
+}
+
+.gallery-img:nth-child(1) { animation-delay: 0.1s; }
+.gallery-img:nth-child(2) { animation-delay: 0.2s; }
+.gallery-img:nth-child(3) { animation-delay: 0.3s; }
+.gallery-img:nth-child(4) { animation-delay: 0.4s; }
+.gallery-img:nth-child(5) { animation-delay: 0.5s; }
+.gallery-img:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 /* RSVP Form */
