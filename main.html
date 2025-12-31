@@ -370,6 +370,106 @@
             </div>
           </div>
         </section>
+
+        <section id="guest-book" class="guest-book-section">
+          <h2 class="section-title">Comments (<span id="comment-count">12</span>)</h2>
+          
+          <form id="guest-book-form" class="guest-book-form">
+            <div class="comment-input-wrapper">
+              <div class="comment-avatar">
+                <span id="guest-initial">G</span>
+              </div>
+              <textarea
+                id="guest-message"
+                placeholder="Leave a comment"
+                rows="3"
+                required
+              ></textarea>
+            </div>
+            <div class="comment-footer">
+              <span class="char-count"><span id="char-count">0</span>/500</span>
+              <button type="submit" class="comment-button">Comment</button>
+            </div>
+          </form>
+
+          <div class="guest-book-list" id="guest-book-list">
+            <!-- Sample comments -->
+            <div class="guest-wish-item">
+              <div class="guest-wish-header">
+                <div class="guest-avatar-comment">
+                  <span>S</span>
+                </div>
+                <div class="guest-wish-info">
+                  <p class="guest-wish-name">Sarah Johnson</p>
+                  <p class="guest-wish-time">2 hours ago</p>
+                </div>
+              </div>
+              <p class="guest-wish-message">
+                Congratulations on your wedding! Wishing you a lifetime of love and happiness together. May your journey be filled with joy! ❤️
+              </p>
+              <div class="comment-actions">
+                <button class="action-btn like-btn">
+                  <i class="far fa-heart"></i>
+                  <span class="like-count">0</span>
+                </button>
+                <button class="action-btn reply-btn">
+                  <i class="fas fa-reply"></i>
+                  Reply
+                </button>
+              </div>
+            </div>
+
+            <div class="guest-wish-item">
+              <div class="guest-wish-header">
+                <div class="guest-avatar-comment">
+                  <span>M</span>
+                </div>
+                <div class="guest-wish-info">
+                  <p class="guest-wish-name">Michael Chen</p>
+                  <p class="guest-wish-time">5 hours ago</p>
+                </div>
+              </div>
+              <p class="guest-wish-message">
+                So happy for both of you! May your love story continue to inspire us all. Cheers to a beautiful future together! 🥂
+              </p>
+              <div class="comment-actions">
+                <button class="action-btn like-btn">
+                  <i class="far fa-heart"></i>
+                  <span class="like-count">0</span>
+                </button>
+                <button class="action-btn reply-btn">
+                  <i class="fas fa-reply"></i>
+                  Reply
+                </button>
+              </div>
+            </div>
+
+            <div class="guest-wish-item">
+              <div class="guest-wish-header">
+                <div class="guest-avatar-comment">
+                  <span>E</span>
+                </div>
+                <div class="guest-wish-info">
+                  <p class="guest-wish-name">Emily Rodriguez</p>
+                  <p class="guest-wish-time">1 day ago</p>
+                </div>
+              </div>
+              <p class="guest-wish-message">
+                What a beautiful couple! Wishing you endless love, laughter, and adventure. Can't wait to celebrate with you! 💕
+              </p>
+              <div class="comment-actions">
+                <button class="action-btn like-btn">
+                  <i class="far fa-heart"></i>
+                  <span class="like-count">0</span>
+                </button>
+                <button class="action-btn reply-btn">
+                  <i class="fas fa-reply"></i>
+                  Reply
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer class="now-playing-bar" id="footer-trigger">

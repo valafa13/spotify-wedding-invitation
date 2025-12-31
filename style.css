@@ -99,6 +99,29 @@ main {
   margin-top: 30px;
 }
 
+/* Animation for guest book notification */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-20px);
+  }
+}
+
 /* ===================================== */
 /* ==== CSS BARU UNTUK FITUR EPISODE ==== */
 /* ===================================== */
@@ -996,4 +1019,223 @@ main {
 .next-btn {
   right: 0;
   border-radius: 0 3px 3px 0;
+}
+
+/* ========================================== */
+/* Guest Book Section */
+/* ========================================== */
+.guest-book-section {
+  padding: 20px 0 80px;
+}
+
+.guest-book-subtitle {
+  font-size: 0.9rem;
+  color: var(--spotify-light-gray);
+  margin-top: -15px;
+  margin-bottom: 25px;
+  font-weight: 400;
+}
+
+/* Comment Form - Spotify Style */
+.guest-book-form {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #404040;
+  padding-bottom: 20px;
+}
+
+.comment-input-wrapper {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.guest-book-form textarea {
+  flex: 1;
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  background-color: #2a2a2a;
+  color: var(--spotify-white);
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  resize: vertical;
+  min-height: 80px;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.guest-book-form textarea:focus {
+  outline: none;
+  border-color: #505050;
+  background-color: #333;
+}
+
+.comment-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 52px;
+}
+
+.char-count {
+  font-size: 0.85rem;
+  color: var(--spotify-light-gray);
+}
+
+.comment-button {
+  background-color: var(--spotify-green);
+  color: #000;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.comment-button:hover {
+  background-color: #1ed760;
+  transform: scale(1.05);
+}
+
+.comment-button:active {
+  transform: scale(0.98);
+}
+
+/* Guest Book List */
+.guest-book-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.guest-wish-item {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  transition: none;
+}
+
+.guest-wish-item:hover {
+  transform: none;
+}
+
+.guest-wish-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.guest-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--spotify-green), #1ed760);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--spotify-black);
+  font-size: 1.1rem;
+}
+
+.guest-avatar-comment {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.guest-wish-info {
+  flex: 1;
+}
+
+.guest-wish-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--spotify-white);
+  margin-bottom: 2px;
+}
+
+.guest-wish-time {
+  font-size: 0.8rem;
+  color: var(--spotify-light-gray);
+}
+
+.guest-wish-message {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #e0e0e0;
+  margin: 0 0 12px 52px;
+}
+
+/* Comment Actions */
+.comment-actions {
+  display: flex;
+  gap: 15px;
+  margin-left: 52px;
+}
+
+.action-btn {
+  background: transparent;
+  border: none;
+  color: var(--spotify-light-gray);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  font-family: var(--font-family);
+  font-weight: 500;
+}
+
+.action-btn:hover {
+  color: var(--spotify-white);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.action-btn i {
+  font-size: 0.9rem;
+}
+
+.like-btn.liked {
+  color: #ff4081;
+}
+
+.like-btn.liked i {
+  font-weight: 900;
+}
+
+.like-btn.liked .fa-heart::before {
+  content: "\f004";
+  font-weight: 900;
 }

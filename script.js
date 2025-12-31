@@ -401,3 +401,169 @@ coupleModal.addEventListener("click", function (e) {
     document.body.style.overflow = "";
   }
 });
+// =========================================================
+// ==== GUEST BOOK FUNCTIONALITY ===
+// =========================================================
+const guestBookForm = document.getElementById("guest-book-form");
+const guestBookList = document.getElementById("guest-book-list");
+const guestMessageTextarea = document.getElementById("guest-message");
+const charCountSpan = document.getElementById("char-count");
+const commentCountSpan = document.getElementById("comment-count");
+const guestInitialSpan = document.getElementById("guest-initial");
+
+// Set initial from guest name
+if (guestInitialSpan && guestName) {
+  const initial = formatName(guestName).charAt(0).toUpperCase();
+  guestInitialSpan.textContent = initial;
+}
+
+// Character counter
+if (guestMessageTextarea && charCountSpan) {
+  guestMessageTextarea.addEventListener("input", function() {
+    const length = this.value.length;
+    charCountSpan.textContent = length;
+    
+    // Limit to 500 characters
+    if (length > 500) {
+      this.value = this.value.substring(0, 500);
+      charCountSpan.textContent = 500;
+    }
+  });
+}
+
+if (guestBookForm) {
+  guestBookForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const guestMessage = document.getElementById("guest-message").value.trim();
+    const formattedGuestName = formatName(guestName);
+
+    if (guestMessage) {
+      // Create new wish item
+      const wishItem = document.createElement("div");
+      wishItem.className = "guest-wish-item";
+      wishItem.style.animation = "fadeInUp 0.5s ease-out";
+      
+      const initial = formattedGuestName.charAt(0).toUpperCase();
+      const randomColor = [
+        "linear-gradient(135deg, #667eea, #764ba2)",
+        "linear-gradient(135deg, #f093fb, #f5576c)",
+        "linear-gradient(135deg, #4facfe, #00f2fe)",
+        "linear-gradient(135deg, #43e97b, #38f9d7)",
+        "linear-gradient(135deg, #fa709a, #fee140)"
+      ][Math.floor(Math.random() * 5)];
+      
+      wishItem.innerHTML = `
+        <div class="guest-wish-header">
+          <div class="guest-avatar-comment" style="background: ${randomColor}">
+            <span>${initial}</span>
+          </div>
+          <div class="guest-wish-info">
+            <p class="guest-wish-name">${escapeHtml(formattedGuestName)}</p>
+            <p class="guest-wish-time">Just now</p>
+          </div>
+        </div>
+        <p class="guest-wish-message">${escapeHtml(guestMessage)}</p>
+        <div class="comment-actions">
+          <button class="action-btn like-btn">
+            <i class="far fa-heart"></i>
+            <span class="like-count">0</span>
+          </button>
+          <button class="action-btn reply-btn">
+            <i class="fas fa-reply"></i>
+            Reply
+          </button>
+        </div>
+      `;
+
+      // Add to top of list
+      guestBookList.insertBefore(wishItem, guestBookList.firstChild);
+
+      // Update comment count
+      if (commentCountSpan) {
+        const currentCount = parseInt(commentCountSpan.textContent);
+        commentCountSpan.textContent = currentCount + 1;
+      }
+
+      // Add like functionality to new comment
+      const likeBtn = wishItem.querySelector(".like-btn");
+      if (likeBtn) {
+        likeBtn.addEventListener("click", function() {
+          toggleLike(this);
+        });
+      }
+
+      // Reset form
+      guestBookForm.reset();
+      if (charCountSpan) charCountSpan.textContent = "0";
+
+      // Show success notification
+      showNotification("Thank you for your comment! ❤️");
+    }
+  });
+}
+
+// Like functionality
+function toggleLike(button) {
+  button.classList.toggle("liked");
+  const likeCountSpan = button.querySelector(".like-count");
+  const heartIcon = button.querySelector("i");
+  
+  if (button.classList.contains("liked")) {
+    const currentCount = parseInt(likeCountSpan.textContent);
+    likeCountSpan.textContent = currentCount + 1;
+    heartIcon.classList.remove("far");
+    heartIcon.classList.add("fas");
+  } else {
+    const currentCount = parseInt(likeCountSpan.textContent);
+    likeCountSpan.textContent = Math.max(0, currentCount - 1);
+    heartIcon.classList.remove("fas");
+    heartIcon.classList.add("far");
+  }
+}
+
+// Add like functionality to existing comments
+document.querySelectorAll(".like-btn").forEach(button => {
+  button.addEventListener("click", function() {
+    toggleLike(this);
+  });
+});
+
+
+// Helper function to escape HTML
+function escapeHtml(text) {
+  const div = document.createElement("div");
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// Show notification helper
+function showNotification(message) {
+  const notification = document.createElement("div");
+  notification.className = "guest-book-notification";
+  notification.textContent = message;
+  notification.style.cssText = `
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #1DB954, #1ed760);
+    color: #000;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    z-index: 1000;
+    animation: slideDown 0.3s ease-out;
+    box-shadow: 0 4px 12px rgba(29, 185, 84, 0.3);
+  `;
+
+  document.body.appendChild(notification);
+
+  setTimeout(() => {
+    notification.style.animation = "slideUp 0.3s ease-out";
+    setTimeout(() => {
+      document.body.removeChild(notification);
+    }, 300);
+  }, 3000);
+}
