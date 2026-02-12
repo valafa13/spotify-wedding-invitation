@@ -75,7 +75,9 @@ body {
   font-size: 0.8rem; /* Font lebih kecil */
   font-weight: 500;
   white-space: nowrap;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 .nav-link.active {
@@ -379,7 +381,9 @@ main {
   border: none;
   cursor: pointer;
   display: inline-block;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .cta-button:hover,
@@ -844,7 +848,9 @@ main {
   font-size: 0.8rem; /* Menyesuaikan ukuran font */
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.2s, transform 0.2s;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
   flex-shrink: 0; /* Mencegah tombol menyusut */
 
   /* INI KUNCI UTAMANYA: Mendorong tombol ke paling kanan */
@@ -1079,7 +1085,9 @@ main {
   font-size: 0.95rem;
   resize: vertical;
   min-height: 80px;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    background-color 0.3s ease;
 }
 
 .guest-book-form textarea:focus {

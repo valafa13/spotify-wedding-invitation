@@ -154,17 +154,17 @@ document.addEventListener("DOMContentLoaded", function () {
         progressBar.style.width = Math.min(100, progressPercentage) + "%";
 
       document.getElementById("days").innerText = Math.floor(
-        distance / (1000 * 60 * 60 * 24)
+        distance / (1000 * 60 * 60 * 24),
       )
         .toString()
         .padStart(2, "0");
       document.getElementById("hours").innerText = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
       )
         .toString()
         .padStart(2, "0");
       document.getElementById("minutes").innerText = Math.floor(
-        (distance % (1000 * 60 * 60)) / (1000 * 60)
+        (distance % (1000 * 60 * 60)) / (1000 * 60),
       )
         .toString()
         .padStart(2, "0");
@@ -320,7 +320,7 @@ document.addEventListener("DOMContentLoaded", function () {
       function (event) {
         touchStartX = event.changedTouches[0].screenX;
       },
-      { passive: true }
+      { passive: true },
     );
 
     modal.addEventListener("touchend", function (event) {
@@ -419,10 +419,10 @@ if (guestInitialSpan && guestName) {
 
 // Character counter
 if (guestMessageTextarea && charCountSpan) {
-  guestMessageTextarea.addEventListener("input", function() {
+  guestMessageTextarea.addEventListener("input", function () {
     const length = this.value.length;
     charCountSpan.textContent = length;
-    
+
     // Limit to 500 characters
     if (length > 500) {
       this.value = this.value.substring(0, 500);
@@ -443,16 +443,16 @@ if (guestBookForm) {
       const wishItem = document.createElement("div");
       wishItem.className = "guest-wish-item";
       wishItem.style.animation = "fadeInUp 0.5s ease-out";
-      
+
       const initial = formattedGuestName.charAt(0).toUpperCase();
       const randomColor = [
         "linear-gradient(135deg, #667eea, #764ba2)",
         "linear-gradient(135deg, #f093fb, #f5576c)",
         "linear-gradient(135deg, #4facfe, #00f2fe)",
         "linear-gradient(135deg, #43e97b, #38f9d7)",
-        "linear-gradient(135deg, #fa709a, #fee140)"
+        "linear-gradient(135deg, #fa709a, #fee140)",
       ][Math.floor(Math.random() * 5)];
-      
+
       wishItem.innerHTML = `
         <div class="guest-wish-header">
           <div class="guest-avatar-comment" style="background: ${randomColor}">
@@ -488,7 +488,7 @@ if (guestBookForm) {
       // Add like functionality to new comment
       const likeBtn = wishItem.querySelector(".like-btn");
       if (likeBtn) {
-        likeBtn.addEventListener("click", function() {
+        likeBtn.addEventListener("click", function () {
           toggleLike(this);
         });
       }
@@ -508,7 +508,7 @@ function toggleLike(button) {
   button.classList.toggle("liked");
   const likeCountSpan = button.querySelector(".like-count");
   const heartIcon = button.querySelector("i");
-  
+
   if (button.classList.contains("liked")) {
     const currentCount = parseInt(likeCountSpan.textContent);
     likeCountSpan.textContent = currentCount + 1;
@@ -523,12 +523,11 @@ function toggleLike(button) {
 }
 
 // Add like functionality to existing comments
-document.querySelectorAll(".like-btn").forEach(button => {
-  button.addEventListener("click", function() {
+document.querySelectorAll(".like-btn").forEach((button) => {
+  button.addEventListener("click", function () {
     toggleLike(this);
   });
 });
-
 
 // Helper function to escape HTML
 function escapeHtml(text) {
