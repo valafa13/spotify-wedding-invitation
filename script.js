@@ -350,7 +350,7 @@ const coupleData = {
   bride: {
     name: "Al Fathya Khaerunnisa",
     role: "The Bride",
-    image: "assets/cw.jpg",
+    image: "assets/cw.JPG",
     about:
       "A beautiful soul with a heart full of love and kindness. Fathya brings joy and warmth to everyone around her.",
     parents: "The first daughter of Mr. Haerudin and Mrs. Yuniati",
@@ -358,7 +358,7 @@ const coupleData = {
   groom: {
     name: "Nauval Firmansyah",
     role: "The Groom",
-    image: "assets/cp.jpg",
+    image: "assets/cp.JPG",
     about:
       "A caring and loving person who always puts his family first. Nauval is known for his dedication and warm personality.",
     parents: "The second son of Mr. Heriyansyah Fitri and Mrs. Ilah Arillah",
