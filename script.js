@@ -353,7 +353,7 @@ const coupleData = {
     image: "assets/cw.jpg",
     about:
       "A beautiful soul with a heart full of love and kindness. Fathya brings joy and warmth to everyone around her.",
-    parents: "Putri pertama dari Bapak Haerudin & Ibu Yuniati",
+    parents: "The first daughter of Mr. Haerudin and Mrs. Yuniati",
   },
   groom: {
     name: "Nauval Firmansyah",
@@ -361,7 +361,7 @@ const coupleData = {
     image: "assets/cp.jpg",
     about:
       "A caring and loving person who always puts his family first. Nauval is known for his dedication and warm personality.",
-    parents: "Putra kedua dari Bapak Heriyansyah Fitri & Ibu Ilah Arillah",
+    parents: "The second son of Mr. Heriyansyah Fitri and Mrs. Ilah Arillah",
   },
 };
 
