@@ -34,7 +34,7 @@
         <section id="beranda">
           <div class="event-info">
             <img
-              src="assets/pw-8.JPG"
+              src="assets/pw-10.JPG"
               alt="Foto Fathya & Nauval"
               class="main-photo"
             />
@@ -56,7 +56,7 @@
             <div class="episode-body">
               <div class="waveform-bg"></div>
               <img
-                src="assets/pw-7.JPG"
+                src="assets/pw-11.JPG"
                 alt="Episode Cover"
                 class="episode-cover"
               />
@@ -183,7 +183,7 @@
             <div id="akad-details" class="event-tab-content">
               <div class="detail-item">
                 <i class="far fa-calendar-alt"></i>
-                <span>Saturday, April 11, 2026</span>
+                <span>Saturday, 11th April, 2026</span>
               </div>
               <div class="detail-item">
                 <i class="far fa-clock"></i>
@@ -214,7 +214,7 @@
             <div id="party-details" class="event-tab-content active">
               <div class="detail-item">
                 <i class="far fa-calendar-alt"></i>
-                <span>Saturday, April 11, 2026</span>
+                <span>Saturday, 11th April, 2026</span>
               </div>
               <div class="detail-item">
                 <i class="far fa-clock"></i>
@@ -264,6 +264,12 @@
             </div>
             <div class="gallery-img">
               <img src="assets/pw-6.JPG" alt="Foto Prewedding 6" />
+            </div>
+            <div class="gallery-img">
+              <img src="assets/pw-7.JPG" alt="Foto Prewedding 7" />
+            </div>
+            <div class="gallery-img">
+              <img src="assets/pw-8.JPG" alt="Foto Prewedding 8" />
             </div>
           </div>
           <div id="image-modal" class="modal">
@@ -333,7 +339,12 @@
             ini untuk kemudahan Anda.
           </p>
 
-          <div id="gift-list">
+          <div class="gift-tabs">
+            <button class="gift-tab active" data-tab="rekening"><i class="fas fa-envelope-open-text"></i> Amplop Digital</button>
+            <button class="gift-tab" data-tab="alamat"><i class="fas fa-gift"></i> Kirim Hadiah</button>
+          </div>
+
+          <div id="gift-rekening" class="gift-tab-content active">
             <div class="playlist-item">
               <span class="track-number"
                 ><img
@@ -365,6 +376,21 @@
                 class="copy-gift-button"
                 data-copy-target="rekening-nauval"
               >
+                Salin
+              </button>
+            </div>
+          </div>
+
+          <div id="gift-alamat" class="gift-tab-content">
+            <div class="gift-address-card">
+              <div class="gift-address-icon">
+                <i class="fas fa-map-marker-alt"></i>
+              </div>
+              <div class="gift-address-info">
+                <p class="gift-address-name">Rumah</p>
+                <p class="gift-address-detail" id="alamat-rumah">Kp. Patahunan No.25, RT 04/RW 10, Desa Cilebut Timur, Kecamatan. Sukaraja, Kab. Bogor, Jawa Barat 16711</p>
+              </div>
+              <button class="copy-gift-button" data-copy-target="alamat-rumah">
                 Salin
               </button>
             </div>

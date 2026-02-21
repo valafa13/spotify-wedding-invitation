@@ -671,7 +671,7 @@ main {
 }
 
 /* Variasi ukuran grid untuk layout yang menarik */
-/* Layout optimized for 6 photos */
+/* Layout optimized for 8 photos */
 .gallery-img:nth-child(1) {
   grid-column: span 6;
   grid-row: span 3;
@@ -702,6 +702,16 @@ main {
   grid-row: span 3;
 }
 
+.gallery-img:nth-child(7) {
+  grid-column: span 3;
+  grid-row: span 3;
+}
+
+.gallery-img:nth-child(8) {
+  grid-column: span 3;
+  grid-row: span 3;
+}
+
 /* Animasi masuk untuk setiap foto */
 .gallery-img {
   animation: fadeInScale 0.6s ease-out backwards;
@@ -724,6 +734,12 @@ main {
 }
 .gallery-img:nth-child(6) {
   animation-delay: 0.6s;
+}
+.gallery-img:nth-child(7) {
+  animation-delay: 0.7s;
+}
+.gallery-img:nth-child(8) {
+  animation-delay: 0.8s;
 }
 
 @keyframes fadeInScale {
@@ -860,6 +876,93 @@ main {
 .copy-gift-button:hover {
   background-color: #1ed760;
   transform: scale(1.05);
+}
+
+/* Gift Tabs */
+.gift-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.gift-tab {
+  background-color: var(--spotify-dark-gray);
+  color: var(--spotify-light-gray);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gift-tab:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--spotify-white);
+}
+
+.gift-tab.active {
+  background-color: var(--spotify-green);
+  color: var(--spotify-white);
+  border-color: var(--spotify-green);
+}
+
+.gift-tab-content {
+  display: none;
+}
+
+.gift-tab-content.active {
+  display: block;
+}
+
+/* Gift Address Card */
+.gift-address-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.gift-address-icon {
+  width: 40px;
+  height: 40px;
+  background-color: var(--spotify-green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1rem;
+  color: var(--spotify-white);
+}
+
+.gift-address-info {
+  flex-grow: 1;
+}
+
+.gift-address-name {
+  color: var(--spotify-white);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+}
+
+.gift-address-detail {
+  color: var(--spotify-light-gray);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.gift-address-card .copy-gift-button {
+  margin-top: 5px;
+  align-self: center;
 }
 
 /* Footer (Now Playing Bar) */

@@ -129,8 +129,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // --- FUNGSI COUNTDOWN & PROGRESS BAR ---
-  const weddingDate = new Date("Jun 09, 2025 12:00:00").getTime();
-  const countdownStartDate = new Date("Jun 8, 2025 00:00:00").getTime();
+  const weddingDate = new Date("Apr 11, 2026 09:00:00").getTime();
+  const countdownStartDate = new Date("Jan 01, 2026 00:00:00").getTime();
   const totalDuration = weddingDate - countdownStartDate;
   const progressBar = document.querySelector(".progress-bar");
   const secondsSpan = document.getElementById("seconds");
@@ -222,35 +222,47 @@ document.addEventListener("DOMContentLoaded", function () {
     if (previewBtn) previewBtn.addEventListener("click", togglePlay);
   }
 
-  const giftList = document.getElementById("gift-list");
+  // Gift Tab Switching
+  const giftTabs = document.querySelectorAll(".gift-tab");
+  const giftTabContents = document.querySelectorAll(".gift-tab-content");
 
-  // Cek jika elemen #gift-list ada di halaman saat ini
-  if (giftList) {
-    giftList.addEventListener("click", function (e) {
-      // Hanya jalankan jika yang diklik adalah tombol dengan kelas .copy-gift-button
-      if (e.target && e.target.classList.contains("copy-gift-button")) {
-        const button = e.target;
-        const targetId = button.dataset.copyTarget;
-        const textToCopy = document.getElementById(targetId).innerText;
+  giftTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      giftTabs.forEach((t) => t.classList.remove("active"));
+      giftTabContents.forEach((c) => c.classList.remove("active"));
+      tab.classList.add("active");
+      const target = document.getElementById("gift-" + tab.dataset.tab);
+      if (target) target.classList.add("active");
+    });
+  });
 
-        navigator.clipboard
-          .writeText(textToCopy)
-          .then(() => {
-            // Beri feedback visual setelah berhasil menyalin
-            const originalText = button.innerText;
-            button.innerText = "Tersalin!";
-            button.style.backgroundColor = "#4CAF50"; // Ubah warna jadi hijau tua
+  // Copy Gift Button (rekening & alamat)
+  const weddingGiftSection = document.getElementById("wedding-gift");
 
-            setTimeout(() => {
-              button.innerText = originalText;
-              button.style.backgroundColor = "var(--spotify-green)"; // Kembalikan warna
-            }, 2000); // Kembalikan teks dan warna setelah 2 detik
-          })
-          .catch((err) => {
-            console.error("Gagal menyalin: ", err);
-            alert("Gagal menyalin nomor.");
-          });
-      }
+  if (weddingGiftSection) {
+    weddingGiftSection.addEventListener("click", function (e) {
+      const button = e.target.closest(".copy-gift-button");
+      if (!button) return;
+
+      const targetId = button.dataset.copyTarget;
+      const textToCopy = document.getElementById(targetId).innerText;
+
+      navigator.clipboard
+        .writeText(textToCopy)
+        .then(() => {
+          const originalText = button.innerText;
+          button.innerText = "Tersalin!";
+          button.style.backgroundColor = "#4CAF50";
+
+          setTimeout(() => {
+            button.innerText = originalText;
+            button.style.backgroundColor = "var(--spotify-green)";
+          }, 2000);
+        })
+        .catch((err) => {
+          console.error("Gagal menyalin: ", err);
+          alert("Gagal menyalin.");
+        });
     });
   }
   // =========================================================
