@@ -91,44 +91,236 @@ document.addEventListener("DOMContentLoaded", function () {
   // Format name function to ensure consistency
   const formatName = (name) => {
     return name
-      .split("+")
+      .split(/[\s+]+/)
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(" ");
   };
 
   if (rsvpForm) {
     const nameInput = document.getElementById("nama");
+    const formattedName = formatName(guestName);
     if (nameInput) {
-      const formattedName = formatName(guestName);
       nameInput.value = formattedName;
       nameInput.setAttribute("readonly", true);
-
-      const formData = new FormData(rsvpForm);
-      formData.set("entry.12345678", formattedName);
     }
 
     const successNotification = document.getElementById("success-notification");
+    const rsvpStatus = document.getElementById("rsvp-status");
+    const rsvpStatusText = document.getElementById("rsvp-status-text");
+    const rsvpChangeBtn = document.getElementById("rsvp-change-btn");
+    const rsvpSubmitBtn = document.getElementById("rsvp-submit-btn");
+    const rsvpKey = "rsvp_" + formattedName;
+
+    // Check if already confirmed
+    const savedRsvp = localStorage.getItem(rsvpKey);
+    if (savedRsvp) {
+      const rsvpData = JSON.parse(savedRsvp);
+      rsvpForm.style.display = "none";
+      rsvpStatus.style.display = "block";
+      rsvpStatusText.textContent = "You have confirmed: " + rsvpData.kehadiran;
+    }
+
+    // Change RSVP button
+    if (rsvpChangeBtn) {
+      rsvpChangeBtn.addEventListener("click", function () {
+        rsvpForm.style.display = "";
+        rsvpStatus.style.display = "none";
+        nameInput.value = formattedName;
+        rsvpSubmitBtn.textContent = "Update Confirmation";
+      });
+    }
+
     rsvpForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      const googleFormUrl =
-        "https://docs.google.com/forms/u/0/d/e/1FAIpQLSc.../formResponse";
-      const formData = new FormData(rsvpForm);
-      fetch(googleFormUrl, { method: "POST", mode: "no-cors", body: formData })
-        .then(() => {
-          successNotification.style.display = "block";
-          rsvpForm.reset();
-          setTimeout(() => {
-            successNotification.style.display = "none";
-          }, 3000);
-        })
-        .catch((error) => {
-          console.error("Error!", error.message);
-          alert("Maaf, terjadi kesalahan saat mengirim konfirmasi.");
-        });
+      const scriptUrl = SCRIPT_URL;
+
+      const nama = document.getElementById("nama").value;
+      const kehadiran = document.querySelector('input[name="entry.87654321"]:checked');
+      const catatan = document.getElementById("catatan").value;
+
+      if (!kehadiran) {
+        alert("Silakan pilih konfirmasi kehadiran.");
+        return;
+      }
+
+      const payload = {
+        type: "rsvp",
+        nama: nama,
+        kehadiran: kehadiran.value,
+        catatan: catatan,
+      };
+
+      // Save to localStorage
+      localStorage.setItem(rsvpKey, JSON.stringify(payload));
+
+      // Show success immediately (optimistic UI)
+      successNotification.style.display = "block";
+      rsvpForm.style.display = "none";
+      setTimeout(() => {
+        successNotification.style.display = "none";
+        rsvpStatus.style.display = "block";
+        rsvpStatusText.textContent = "You have confirmed: " + kehadiran.value;
+      }, 3000);
+
+      // Send data in background
+      fetch(scriptUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      }).catch((error) => {
+        console.error("Error!", error.message);
+      });
     });
   }
 
-  // --- FUNGSI COUNTDOWN & PROGRESS BAR ---
+  // =========================================================
+  // ==== GUEST BOOK FUNCTIONALITY ===
+  // =========================================================
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxK13sIqNJNNE2uVWdUnEBa1dcgEu6NvKBv_1aLXOTfulCEhtwEr-p_VZU-Eetc0xY1PA/exec";
+
+  const guestBookForm = document.getElementById("guest-book-form");
+  const guestBookList = document.getElementById("guest-book-list");
+  const guestMessageTextarea = document.getElementById("guest-message");
+  const charCountSpan = document.getElementById("char-count");
+  const commentCountSpan = document.getElementById("comment-count");
+  const guestInitialSpan = document.getElementById("guest-initial");
+
+  // Set initial from guest name
+  if (guestInitialSpan && guestName) {
+    const initial = formatName(guestName).charAt(0).toUpperCase();
+    guestInitialSpan.textContent = initial;
+  }
+
+  // Avatar color based on name (consistent per person)
+  function getAvatarColor(name) {
+    const colors = [
+      "linear-gradient(135deg, #667eea, #764ba2)",
+      "linear-gradient(135deg, #f093fb, #f5576c)",
+      "linear-gradient(135deg, #4facfe, #00f2fe)",
+      "linear-gradient(135deg, #43e97b, #38f9d7)",
+      "linear-gradient(135deg, #fa709a, #fee140)",
+    ];
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return colors[Math.abs(hash) % colors.length];
+  }
+
+  // Time ago helper
+  function timeAgo(dateString) {
+    const now = new Date();
+    const date = new Date(dateString);
+    const seconds = Math.floor((now - date) / 1000);
+    if (seconds < 60) return "Just now";
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return minutes + " min ago";
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return hours + " hours ago";
+    const days = Math.floor(hours / 24);
+    if (days < 30) return days + " days ago";
+    const months = Math.floor(days / 30);
+    return months + " months ago";
+  }
+
+  // Render a single comment element
+  function createCommentElement(nama, message, timestamp) {
+    const item = document.createElement("div");
+    item.className = "guest-wish-item";
+    const initial = nama.charAt(0).toUpperCase();
+    const color = getAvatarColor(nama);
+    const time = timestamp ? timeAgo(timestamp) : "Just now";
+
+    item.innerHTML = `
+      <div class="guest-wish-header">
+        <div class="guest-avatar-comment" style="background: ${color}">
+          <span>${initial}</span>
+        </div>
+        <div class="guest-wish-info">
+          <p class="guest-wish-name">${escapeHtml(nama)}</p>
+          <p class="guest-wish-time">${time}</p>
+        </div>
+      </div>
+      <p class="guest-wish-message">${escapeHtml(message)}</p>
+    `;
+    return item;
+  }
+
+  // Load comments from Google Sheet
+  function loadComments() {
+    fetch(SCRIPT_URL)
+      .then((res) => res.json())
+      .then((comments) => {
+        guestBookList.innerHTML = "";
+        if (commentCountSpan) commentCountSpan.textContent = comments.length;
+
+        // Show newest first
+        comments.reverse().forEach((c) => {
+          const el = createCommentElement(c.nama, c.message, c.timestamp);
+          guestBookList.appendChild(el);
+        });
+      })
+      .catch((err) => {
+        console.error("Failed to load comments:", err);
+        guestBookList.innerHTML = '<p style="text-align:center; color:#b3b3b3;">Failed to load comments</p>';
+      });
+  }
+
+  // Load comments on page load
+  loadComments();
+
+  // Character counter
+  if (guestMessageTextarea && charCountSpan) {
+    guestMessageTextarea.addEventListener("input", function () {
+      const length = this.value.length;
+      charCountSpan.textContent = length;
+      if (length > 500) {
+        this.value = this.value.substring(0, 500);
+        charCountSpan.textContent = 500;
+      }
+    });
+  }
+
+  if (guestBookForm) {
+    guestBookForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const guestMessage = document.getElementById("guest-message").value.trim();
+      const formattedGuestName = formatName(guestName);
+
+      if (guestMessage) {
+        const payload = {
+          type: "comment",
+          nama: formattedGuestName,
+          message: guestMessage,
+        };
+
+        // Optimistic UI: show comment immediately
+        const newComment = createCommentElement(formattedGuestName, guestMessage, null);
+        newComment.style.animation = "fadeInUp 0.5s ease-out";
+        guestBookList.insertBefore(newComment, guestBookList.firstChild);
+
+        if (commentCountSpan) {
+          const currentCount = parseInt(commentCountSpan.textContent) || 0;
+          commentCountSpan.textContent = currentCount + 1;
+        }
+
+        // Reset form
+        guestBookForm.reset();
+        if (charCountSpan) charCountSpan.textContent = "0";
+        showNotification("Thank you for your comment! \u2764\ufe0f");
+
+        // Send to Google Sheet in background
+        fetch(SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }).catch((err) => console.error("Error sending comment:", err));
+      }
+    });
+  }
   const weddingDate = new Date("Apr 11, 2026 09:00:00").getTime();
   const countdownStartDate = new Date("Jan 01, 2026 00:00:00").getTime();
   const totalDuration = weddingDate - countdownStartDate;
@@ -394,151 +586,45 @@ coupleClickables.forEach((item) => {
     document.getElementById("couple-detail-about").textContent = data.about;
     document.getElementById("couple-detail-parents").textContent = data.parents;
 
+    // Push state so back button closes modal instead of navigating away
+    history.pushState({ coupleModalOpen: true }, "");
+
     // Show modal
     coupleModal.classList.add("show");
     document.body.style.overflow = "hidden";
   });
 });
 
-// Close modal
-coupleModalClose.addEventListener("click", function () {
+// Helper to close couple modal
+function closeCoupleModal() {
   coupleModal.classList.remove("show");
   document.body.style.overflow = "";
+}
+
+// Close modal with X button
+coupleModalClose.addEventListener("click", function () {
+  closeCoupleModal();
+  // Go back to remove the pushed state
+  if (history.state && history.state.coupleModalOpen) {
+    history.back();
+  }
 });
 
 // Close modal when clicking outside
 coupleModal.addEventListener("click", function (e) {
   if (e.target === coupleModal) {
-    coupleModal.classList.remove("show");
-    document.body.style.overflow = "";
+    closeCoupleModal();
+    if (history.state && history.state.coupleModalOpen) {
+      history.back();
+    }
   }
 });
-// =========================================================
-// ==== GUEST BOOK FUNCTIONALITY ===
-// =========================================================
-const guestBookForm = document.getElementById("guest-book-form");
-const guestBookList = document.getElementById("guest-book-list");
-const guestMessageTextarea = document.getElementById("guest-message");
-const charCountSpan = document.getElementById("char-count");
-const commentCountSpan = document.getElementById("comment-count");
-const guestInitialSpan = document.getElementById("guest-initial");
 
-// Set initial from guest name
-if (guestInitialSpan && guestName) {
-  const initial = formatName(guestName).charAt(0).toUpperCase();
-  guestInitialSpan.textContent = initial;
-}
-
-// Character counter
-if (guestMessageTextarea && charCountSpan) {
-  guestMessageTextarea.addEventListener("input", function () {
-    const length = this.value.length;
-    charCountSpan.textContent = length;
-
-    // Limit to 500 characters
-    if (length > 500) {
-      this.value = this.value.substring(0, 500);
-      charCountSpan.textContent = 500;
-    }
-  });
-}
-
-if (guestBookForm) {
-  guestBookForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const guestMessage = document.getElementById("guest-message").value.trim();
-    const formattedGuestName = formatName(guestName);
-
-    if (guestMessage) {
-      // Create new wish item
-      const wishItem = document.createElement("div");
-      wishItem.className = "guest-wish-item";
-      wishItem.style.animation = "fadeInUp 0.5s ease-out";
-
-      const initial = formattedGuestName.charAt(0).toUpperCase();
-      const randomColor = [
-        "linear-gradient(135deg, #667eea, #764ba2)",
-        "linear-gradient(135deg, #f093fb, #f5576c)",
-        "linear-gradient(135deg, #4facfe, #00f2fe)",
-        "linear-gradient(135deg, #43e97b, #38f9d7)",
-        "linear-gradient(135deg, #fa709a, #fee140)",
-      ][Math.floor(Math.random() * 5)];
-
-      wishItem.innerHTML = `
-        <div class="guest-wish-header">
-          <div class="guest-avatar-comment" style="background: ${randomColor}">
-            <span>${initial}</span>
-          </div>
-          <div class="guest-wish-info">
-            <p class="guest-wish-name">${escapeHtml(formattedGuestName)}</p>
-            <p class="guest-wish-time">Just now</p>
-          </div>
-        </div>
-        <p class="guest-wish-message">${escapeHtml(guestMessage)}</p>
-        <div class="comment-actions">
-          <button class="action-btn like-btn">
-            <i class="far fa-heart"></i>
-            <span class="like-count">0</span>
-          </button>
-          <button class="action-btn reply-btn">
-            <i class="fas fa-reply"></i>
-            Reply
-          </button>
-        </div>
-      `;
-
-      // Add to top of list
-      guestBookList.insertBefore(wishItem, guestBookList.firstChild);
-
-      // Update comment count
-      if (commentCountSpan) {
-        const currentCount = parseInt(commentCountSpan.textContent);
-        commentCountSpan.textContent = currentCount + 1;
-      }
-
-      // Add like functionality to new comment
-      const likeBtn = wishItem.querySelector(".like-btn");
-      if (likeBtn) {
-        likeBtn.addEventListener("click", function () {
-          toggleLike(this);
-        });
-      }
-
-      // Reset form
-      guestBookForm.reset();
-      if (charCountSpan) charCountSpan.textContent = "0";
-
-      // Show success notification
-      showNotification("Thank you for your comment! ❤️");
-    }
-  });
-}
-
-// Like functionality
-function toggleLike(button) {
-  button.classList.toggle("liked");
-  const likeCountSpan = button.querySelector(".like-count");
-  const heartIcon = button.querySelector("i");
-
-  if (button.classList.contains("liked")) {
-    const currentCount = parseInt(likeCountSpan.textContent);
-    likeCountSpan.textContent = currentCount + 1;
-    heartIcon.classList.remove("far");
-    heartIcon.classList.add("fas");
-  } else {
-    const currentCount = parseInt(likeCountSpan.textContent);
-    likeCountSpan.textContent = Math.max(0, currentCount - 1);
-    heartIcon.classList.remove("fas");
-    heartIcon.classList.add("far");
+// Handle browser back button to close modal
+window.addEventListener("popstate", function (e) {
+  if (coupleModal.classList.contains("show")) {
+    closeCoupleModal();
   }
-}
-
-// Add like functionality to existing comments
-document.querySelectorAll(".like-btn").forEach((button) => {
-  button.addEventListener("click", function () {
-    toggleLike(this);
-  });
 });
 
 // Helper function to escape HTML

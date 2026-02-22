@@ -302,7 +302,7 @@ main {
   padding: 10px;
   background-color: transparent;
   border: none;
-  color: var(--spotify-light-gray);
+  color: var(--spotify-white);
   font-size: 0.9rem;
   font-weight: 500;
   border-radius: 6px;
@@ -311,8 +311,13 @@ main {
   font-family: var(--font-family);
 }
 
-.tab-button.active {
+.tab-button:hover {
   background-color: var(--spotify-dark-gray);
+  color: var(--spotify-white);
+}
+
+.tab-button.active {
+  background-color: var(--spotify-green);
   color: var(--spotify-white);
   font-weight: 700;
 }

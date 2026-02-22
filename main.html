@@ -323,8 +323,14 @@
               name="entry.55555555"
               placeholder="Message or notes (optional)"
             ></textarea>
-            <button type="submit" class="cta-button">Send Confirmation</button>
+            <button type="submit" class="cta-button" id="rsvp-submit-btn">Send Confirmation</button>
           </form>
+          <div id="rsvp-status" class="notification" style="display:none;">
+            <i class="fas fa-check-circle"></i>
+            <span id="rsvp-status-text"></span>
+            <br />
+            <button type="button" id="rsvp-change-btn" class="cta-button small" style="margin-top: 10px;">Change RSVP</button>
+          </div>
           <div id="success-notification" class="notification">
             <i class="fas fa-check-circle"></i> Thank you, your confirmation has
             been sent!
@@ -340,8 +346,8 @@
           </p>
 
           <div class="gift-tabs">
-            <button class="gift-tab active" data-tab="rekening"><i class="fas fa-envelope-open-text"></i> Amplop Digital</button>
-            <button class="gift-tab" data-tab="alamat"><i class="fas fa-gift"></i> Kirim Hadiah</button>
+            <button class="gift-tab active" data-tab="rekening"><i class="fas fa-envelope-open-text"></i>Digital Envelope</button>
+            <button class="gift-tab" data-tab="alamat"><i class="fas fa-gift"></i> Send Gifts</button>
           </div>
 
           <div id="gift-rekening" class="gift-tab-content active">
@@ -421,84 +427,7 @@
           </form>
 
           <div class="guest-book-list" id="guest-book-list">
-            <!-- Sample comments -->
-            <div class="guest-wish-item">
-              <div class="guest-wish-header">
-                <div class="guest-avatar-comment">
-                  <span>S</span>
-                </div>
-                <div class="guest-wish-info">
-                  <p class="guest-wish-name">Sarah Johnson</p>
-                  <p class="guest-wish-time">2 hours ago</p>
-                </div>
-              </div>
-              <p class="guest-wish-message">
-                Congratulations on your wedding! Wishing you a lifetime of love
-                and happiness together. May your journey be filled with joy! ❤️
-              </p>
-              <div class="comment-actions">
-                <button class="action-btn like-btn">
-                  <i class="far fa-heart"></i>
-                  <span class="like-count">0</span>
-                </button>
-                <button class="action-btn reply-btn">
-                  <i class="fas fa-reply"></i>
-                  Reply
-                </button>
-              </div>
-            </div>
-
-            <div class="guest-wish-item">
-              <div class="guest-wish-header">
-                <div class="guest-avatar-comment">
-                  <span>M</span>
-                </div>
-                <div class="guest-wish-info">
-                  <p class="guest-wish-name">Michael Chen</p>
-                  <p class="guest-wish-time">5 hours ago</p>
-                </div>
-              </div>
-              <p class="guest-wish-message">
-                So happy for both of you! May your love story continue to
-                inspire us all. Cheers to a beautiful future together! 🥂
-              </p>
-              <div class="comment-actions">
-                <button class="action-btn like-btn">
-                  <i class="far fa-heart"></i>
-                  <span class="like-count">0</span>
-                </button>
-                <button class="action-btn reply-btn">
-                  <i class="fas fa-reply"></i>
-                  Reply
-                </button>
-              </div>
-            </div>
-
-            <div class="guest-wish-item">
-              <div class="guest-wish-header">
-                <div class="guest-avatar-comment">
-                  <span>E</span>
-                </div>
-                <div class="guest-wish-info">
-                  <p class="guest-wish-name">Emily Rodriguez</p>
-                  <p class="guest-wish-time">1 day ago</p>
-                </div>
-              </div>
-              <p class="guest-wish-message">
-                What a beautiful couple! Wishing you endless love, laughter, and
-                adventure. Can't wait to celebrate with you! 💕
-              </p>
-              <div class="comment-actions">
-                <button class="action-btn like-btn">
-                  <i class="far fa-heart"></i>
-                  <span class="like-count">0</span>
-                </button>
-                <button class="action-btn reply-btn">
-                  <i class="fas fa-reply"></i>
-                  Reply
-                </button>
-              </div>
-            </div>
+            <p class="loading-comments" style="text-align:center; color:#b3b3b3;">Loading comments...</p>
           </div>
         </section>
       </main>
