@@ -160,17 +160,25 @@ main {
 }
 
 .add-button {
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: transparent;
+  border: 2px solid var(--spotify-white);
   color: var(--spotify-white);
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 1rem;
   cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.add-button:hover {
+  background-color: var(--spotify-white);
+  color: #000;
+  transform: scale(1.1);
 }
 
 .episode-body {
@@ -364,7 +372,13 @@ main {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  align-items: center;
+  align-items: stretch;
+}
+
+.event-buttons .cta-button {
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
 }
 
 .cta-button.small.calendar {

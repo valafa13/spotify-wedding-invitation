@@ -556,7 +556,7 @@ const coupleData = {
     role: "The Bride",
     image: "assets/cw.JPG",
     about:
-      "A beautiful soul with a heart full of love and kindness. Fathya brings joy and warmth to everyone around her.",
+      "Transforming from Miss to Mrs., savouring each precious second along the way.",
     parents: "The first daughter of Mr. Haerudin and Mrs. Yuniati",
   },
   groom: {
@@ -564,7 +564,7 @@ const coupleData = {
     role: "The Groom",
     image: "assets/cp.JPG",
     about:
-      "A caring and loving person who always puts his family first. Nauval is known for his dedication and warm personality.",
+      "Growing from Mr. to Husband, cherishing every moment of the journey together.",
     parents: "The second son of Mr. Heriyansyah Fitri and Mrs. Ilah Arillah",
   },
 };
