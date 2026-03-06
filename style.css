@@ -37,15 +37,31 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.9);
 }
 
-/* Header dengan Nav Pills */
+/* Scroll reveal animations */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Header dengan Nav Pills — Glassmorphism */
 .spotify-header {
   display: flex;
   align-items: center;
-  padding: 15px;
-  background-color: var(--spotify-black);
+  padding: 12px 15px;
+  background: rgba(18, 18, 18, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -67,23 +83,30 @@ body {
 
 .nav-link {
   display: block;
-  padding: 5px 12px; /* Padding lebih kecil */
-  background-color: var(--spotify-dark-gray);
-  color: var(--spotify-white);
+  padding: 8px 16px;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   border-radius: 50px;
-  font-size: 0.8rem; /* Font lebih kecil */
+  font-size: 0.8rem;
   font-weight: 500;
   white-space: nowrap;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+  transition: all 0.3s ease;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--spotify-white);
 }
 
 .nav-link.active {
   background-color: var(--spotify-green);
   color: var(--spotify-black);
   font-weight: 700;
+  box-shadow: 0 2px 8px rgba(29, 185, 84, 0.3);
 }
 
 /* Konten Utama */
@@ -95,10 +118,11 @@ main {
 }
 
 .section-title {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
-  margin-bottom: 20px;
-  margin-top: 30px;
+  margin-bottom: 24px;
+  margin-top: 40px;
+  letter-spacing: -0.3px;
 }
 
 /* Animation for guest book notification */
@@ -133,11 +157,12 @@ main {
 }
 
 .episode-card {
-  background: radial-gradient(circle, #4a3a3a, #1e1919 80%);
-  border-radius: 8px;
-  padding: 20px;
+  background: radial-gradient(circle at top, #3d2e2a, #1e1919 80%);
+  border-radius: 12px;
+  padding: 24px;
   color: #eaeaea;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .episode-header {
@@ -217,13 +242,13 @@ main {
 }
 
 .episode-description {
-  margin: 10px 0 25px 0;
+  margin: 12px 0 28px 0;
 }
 
 .episode-description p {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: #d1d1d1;
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .episode-controls {
@@ -282,19 +307,77 @@ main {
   transform: scale(1.05);
 }
 
-/* Info Beranda dan Acara */
+/* Info Beranda dan Acara — Hero Section */
 .event-info {
   text-align: center;
-  padding-top: 20px;
+  padding: 30px 0 10px;
+  position: relative;
+}
+
+.event-info::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(
+    circle,
+    rgba(29, 185, 84, 0.08) 0%,
+    rgba(180, 130, 100, 0.05) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
 }
 
 .event-info .main-photo {
-  width: 80%;
-  max-width: 250px;
+  width: 70%;
+  max-width: 220px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  position: relative;
+  z-index: 1;
+  animation: floatPhoto 4s ease-in-out infinite;
+}
+
+@keyframes floatPhoto {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.event-info h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-top: 20px;
+  line-height: 1.1;
+  position: relative;
+  z-index: 1;
+}
+
+.event-info p {
+  color: var(--spotify-light-gray);
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-top: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.event-info .save-the-date {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  position: relative;
+  z-index: 1;
 }
 
 .event-tabs {
@@ -331,11 +414,12 @@ main {
 }
 
 .event-tab-content {
-  display: none; /* Sembunyikan semua konten secara default */
-  background-color: var(--spotify-dark-gray);
-  padding: 25px 20px;
-  border-radius: 8px;
+  display: none;
+  background-color: rgba(40, 40, 40, 0.6);
+  padding: 28px 22px;
+  border-radius: 12px;
   animation: fadeIn 0.5s;
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .event-tab-content.active {
@@ -356,15 +440,16 @@ main {
 .detail-item {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
-  font-size: 0.95rem;
+  gap: 16px;
+  margin-bottom: 18px;
+  font-size: 0.92rem;
 }
 
 .detail-item i {
-  color: var(--spotify-light-gray);
-  width: 20px;
+  color: var(--spotify-green);
+  width: 22px;
   text-align: center;
+  font-size: 1.05rem;
 }
 
 .event-buttons {
@@ -398,6 +483,7 @@ main {
   font-weight: 700;
   font-size: 1rem;
   border: none;
+  box-shadow: 0 4px 16px rgba(29, 185, 84, 0.2);
   cursor: pointer;
   display: inline-block;
   transition:
@@ -407,8 +493,9 @@ main {
 
 .cta-button:hover,
 .cta-button:focus {
-  transform: scale(1.05);
+  transform: scale(1.04) translateY(-1px);
   background-color: #1ed760;
+  box-shadow: 0 6px 24px rgba(29, 185, 84, 0.35);
 }
 
 .cta-button i {
@@ -640,17 +727,18 @@ main {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-auto-rows: 80px;
-  gap: 8px;
+  gap: 6px;
   margin-bottom: 20px;
 }
 
 .gallery-img {
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 12px;
+  border-radius: 10px;
   overflow: hidden;
   position: relative;
   background: var(--spotify-dark-gray);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .gallery-img img {
@@ -658,7 +746,7 @@ main {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
 }
 
@@ -682,11 +770,11 @@ main {
 }
 
 .gallery-img:hover img {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .gallery-img:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 /* Variasi ukuran grid untuk layout yang menarik */
@@ -780,19 +868,20 @@ main {
 .rsvp-section form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 18px;
 }
 
 .rsvp-section input[type="text"],
 .rsvp-section textarea {
   width: 100%;
-  background-color: var(--spotify-dark-gray);
-  border: 1px solid #535353;
-  border-radius: 4px;
-  padding: 15px;
+  background-color: rgba(40, 40, 40, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 16px;
   color: var(--spotify-white);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-family: var(--font-family);
+  transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .rsvp-section input[type="text"][readonly] {
@@ -830,12 +919,13 @@ main {
 .notification {
   display: none;
   margin-top: 20px;
-  padding: 15px;
-  background-color: var(--spotify-dark-gray);
+  padding: 18px;
+  background: rgba(29, 185, 84, 0.1);
   color: var(--spotify-green);
   border-left: 4px solid var(--spotify-green);
-  border-radius: 4px;
+  border-radius: 10px;
   text-align: center;
+  animation: fadeIn 0.4s ease-out;
 }
 
 .notification i {
@@ -848,11 +938,12 @@ main {
 }
 
 .gift-description {
-  color: var(--spotify-light-gray);
-  font-size: 0.9rem;
-  line-height: 1.6;
-  margin-bottom: 25px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  margin-bottom: 28px;
   text-align: center;
+  font-style: italic;
 }
 
 /* Mengatur layout utama setiap baris item */
@@ -989,15 +1080,18 @@ main {
   position: sticky;
   bottom: 0;
   width: 100%;
-  background-color: var(--spotify-dark-gray);
-  height: 65px; /* TINGGI DIPERKECIL */
+  background: rgba(40, 40, 40, 0.85);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  height: 70px;
   padding: 10px 15px;
   display: flex;
   align-items: center;
   gap: 15px;
   z-index: 10;
-  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.4);
   cursor: pointer;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   overflow: hidden; /* Penting untuk progress bar */
 }
 
@@ -1044,22 +1138,25 @@ main {
 }
 
 .time-block span {
-  font-size: 1.2rem; /* FONT ANGKA DIPERKECIL */
+  font-size: 1.3rem;
   font-weight: 700;
   color: var(--spotify-white);
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
 }
 
 .time-block span.tick-animation {
-  transform: scale(1.1);
+  transform: scale(1.15);
   color: var(--spotify-green);
 }
 
 .time-block p {
-  font-size: 0.6rem; /* FONT LABEL DIPERKECIL */
-  color: var(--spotify-light-gray);
+  font-size: 0.55rem;
+  color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
-  margin-top: 1px;
+  margin-top: 2px;
+  letter-spacing: 1px;
 }
 
 /* Modal Gambar Besar */
@@ -1153,7 +1250,7 @@ main {
 /* Guest Book Section */
 /* ========================================== */
 .guest-book-section {
-  padding: 20px 0 80px;
+  padding: 20px 0 100px;
 }
 
 .guest-book-subtitle {
@@ -1198,24 +1295,22 @@ main {
 .guest-book-form textarea {
   flex: 1;
   width: 100%;
-  padding: 12px 15px;
-  border: 1px solid #404040;
-  border-radius: 8px;
-  background-color: #2a2a2a;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background-color: rgba(42, 42, 42, 0.6);
   color: var(--spotify-white);
   font-family: var(--font-family);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   resize: vertical;
   min-height: 80px;
-  transition:
-    border-color 0.3s ease,
-    background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .guest-book-form textarea:focus {
   outline: none;
-  border-color: #505050;
-  background-color: #333;
+  border-color: rgba(29, 185, 84, 0.4);
+  background-color: rgba(50, 50, 50, 0.8);
 }
 
 .comment-footer {
@@ -1319,9 +1414,9 @@ main {
 }
 
 .guest-wish-message {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: #e0e0e0;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.75);
   margin: 0 0 12px 52px;
 }
 

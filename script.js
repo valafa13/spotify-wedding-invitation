@@ -1,5 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
   // =========================================================
+  // ==== SCROLL REVEAL ANIMATION ====
+  // =========================================================
+  const revealElements = document.querySelectorAll(".reveal");
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+  );
+  revealElements.forEach((el) => revealObserver.observe(el));
+
+  // =========================================================
   // ==== FUNGSI UNTUK NAVIGASI SINGLE-PAGE (SPA) === =
   // =========================================================
   const navLinks = document.querySelectorAll(".nav-link");
@@ -443,12 +460,14 @@ document.addEventListener("DOMContentLoaded", function () {
         .writeText(textToCopy)
         .then(() => {
           const originalText = button.innerText;
-          button.innerText = "Tersalin!";
-          button.style.backgroundColor = "#4CAF50";
+          button.innerText = "✓ Tersalin!";
+          button.style.backgroundColor = "#1db954";
+          button.style.transform = "scale(1.1)";
 
           setTimeout(() => {
             button.innerText = originalText;
-            button.style.backgroundColor = "var(--spotify-green)";
+            button.style.backgroundColor = "";
+            button.style.transform = "";
           }, 2000);
         })
         .catch((err) => {
